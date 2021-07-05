@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { URL_INSTANCE, URL_USERLOCATION } from "../../config";
+import { URL_INSTANCE, URL_USERLOCATION } from "../config";
 import { setCity, setCoords, setCurrent, setPerDay, setTommorow, setWeek } from "../reducers/mainReducer";
 
     export const userLocation = () => {
@@ -9,6 +9,7 @@ import { setCity, setCoords, setCurrent, setPerDay, setTommorow, setWeek } from 
             console.log(response)
             let city = response.data.city
             dispatch(setCity(city))
+            return city
         } catch (error) {
             console.log('Find geoposition error: ' + error)
         }
@@ -21,7 +22,8 @@ import { setCity, setCoords, setCurrent, setPerDay, setTommorow, setWeek } from 
             let response = await axios.get(`${URL_INSTANCE}api/geo/city?city=${city}`)
             let {geo_lat, geo_lon} = response.data[0]
             dispatch(setCoords(geo_lat, geo_lon))
-            console.log(geo_lat, geo_lon)
+            dispatch(setCity(city))
+            return {geo_lat, geo_lon}
         } catch (error) {
             console.log('Get coords error: ' + error)
         }
@@ -45,7 +47,8 @@ import { setCity, setCoords, setCurrent, setPerDay, setTommorow, setWeek } from 
             let dayToday = Math.round(perDay.day)
             let eveToday = Math.round(perDay.eve)
             let nightToday = Math.round(perDay.night)
-            dispatch(setPerDay({morn: mornToday, day: dayToday, eve: eveToday, night: nightToday}))
+            let iconToday =  `https://openweathermap.org/img/wn/${response.data.daily[0].weather[0]["icon"]}@2x.png`
+            dispatch(setPerDay({morn: mornToday, day: dayToday, eve: eveToday, night: nightToday, icon: iconToday}))
             let tommorow = response.data.daily[1]
             let windTommorow = Math.round(tommorow.wind_speed)
             let sunsetTommorow = new Date(
@@ -82,36 +85,3 @@ import { setCity, setCoords, setCurrent, setPerDay, setTommorow, setWeek } from 
 
 
 
-
-// export const geolocation = {
-
-    //     async userLocation () {
-    //         try {
-    //             let response = await axios.get(`${URL_USERLOCATION}json/?lang=ru`)
-    //             let city = response.data.city
-    //             return city
-    //         } catch (error) {
-    //             console.log('Find geoposition error: ' + error)
-    //         }
-    //     },
-    
-    //     async getCoords (city)  {
-    //         try {
-    //             let response = await axios.get(`${URL_INSTANCE}api/geo/city?city=${city}`)
-    //             let {geo_lat, geo_lon} = response.data[0]
-    //             console.log(geo_lat, geo_lon)
-    //         } catch (error) {
-    //             console.log('Get coords error: ' + error)
-    //         }
-    //     },
-    
-    //     async getWeatherForecast(lat, lon) {
-    //         try {
-    //             let response = await axios.get(`${URL_INSTANCE}api/geo/weather?lat=${lat}&lon=${lon}`)
-    //             console.log(response)
-    //         } catch (error) {
-    //             console.log('Get weather forecast error: ' + error)
-    //         }
-    //     }
-    
-    // }

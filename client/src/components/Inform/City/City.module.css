@@ -1,0 +1,14 @@
+.city{
+    font-size: 35px;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+    color: #575757;
+    text-shadow: 1px 1px 1px rgb(3, 3, 3);
+    text-align: center;
+}
+
+@media (max-width: 400px){
+    .city{ 
+        font-size: 32px;
+    }
+}

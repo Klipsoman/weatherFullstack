@@ -1,0 +1,16 @@
+.informWrapper{
+    height: 450px;
+    text-shadow: 1px 1px 1px black;
+}
+@media (max-width: 600px){
+    .informWrapper{
+        padding: 0;
+        height: 365px;
+    }
+}
+@media (max-width: 480px){
+    .informWrapper{
+        padding: 0;
+        height: 350px;
+    }
+}

@@ -1,0 +1,58 @@
+.weekBlock{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.dayItem{
+    display: flex;
+    flex: 0 0 20%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0 0 15px;
+    font-size: 16px;
+    text-align: center;  
+}
+.date{
+    margin-bottom: 3px;
+    font-size: 14px;
+    color: dimgrey;
+}
+.dayIcon img{
+    width: 50px;
+}
+.dayTemp{
+    color: antiquewhite;
+    font-size: 18px;
+    position: relative;
+    font-weight: 600;
+}
+.dayTemp::after{
+        content: "o";
+        font-size: 8px;
+        position: absolute;
+        top: 0;
+        right: 10;
+}
+
+@media (max-width: 715px){
+    .dayItem{
+        flex: 0 0 20%;
+        font-size: 14px;
+        margin: 10px 0 0 10px;
+    }
+}
+@media (max-width: 485px){
+    .dayItem{
+        flex: 0 0 20%;
+        font-size: 13px;
+    }
+}
+@media (max-width: 400px){
+    .dayItem{
+        flex: 0 0 20%;
+        font-size: 11px;
+    }
+}

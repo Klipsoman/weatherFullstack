@@ -1,32 +1,24 @@
+import { useEffect} from "react";
+import { useDispatch} from "react-redux";
+import { getCoords, getWeatherForecast, userLocation } from "./api/geolocation";
 import "./App.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector} from "react-redux";
-import { userLocation, getCoords, getWeatherForecast } from "./components/api/geolocation";
-import { setNewCity } from "./components/reducers/mainReducer";
+import Content from "./components/Content";
 
 function App() {
-  let city = useSelector((state) => state.main.city);
-  let newCity = useSelector(state=> state.main.newCity)
   const dispatch = useDispatch()
-
+  
   useEffect(()=>{
-     dispatch(getCoords('Пушкин'))
+    enterGetInfo()  
   },[])
 
-  useEffect(() => {
-     dispatch(userLocation())
-  },[]);
-
-  useEffect(()=>{
-    dispatch(getWeatherForecast('57.8194415', '28.3317198'))
-  },[])
-
-  function func(e){
-    dispatch(setNewCity(e.target.value))
+  async function enterGetInfo(){
+    let city = await dispatch(userLocation())
+    let {geo_lat, geo_lon} = await dispatch(getCoords(city))
+    dispatch(getWeatherForecast(geo_lat, geo_lon))
   }
 
   return <div>
-    <input type='text' onChange={func}/>    {city}  {newCity}
+      <Content />
     </div>;
 }
 

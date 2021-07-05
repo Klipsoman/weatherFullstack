@@ -1,6 +1,7 @@
 const SET_COORDS = "ADD_COORDS";
 const SET_CITY = "SET_CITY";
 const SET_NEWCITY = "SET_NEWCITY";
+const SET_WICHTIME = "SET_WICHTIME"
 const SET_CURRENT = "SET_CURRENT";
 const SET_PERDAY = "SET_PERDAY";
 const SET_TOMMOROW = "SET_TOMMOROW";
@@ -11,6 +12,7 @@ const initialState = {
   newCity: "",
   lat: null,
   lon: null,
+  whichTime: 'today',
   weather: {
     current: {
       temp: null,
@@ -25,6 +27,7 @@ const initialState = {
       day: null,
       eve: null,
       night: null,
+      icon: null,
     },
     tommorow: {
       wind: null,
@@ -59,6 +62,11 @@ export default function mainReducer(state = initialState, action) {
         ...state,
         newCity: action.payload,
       };
+    case SET_WICHTIME:
+      return {
+        ...state,
+        whichTime: action.payload
+      }
     case SET_CURRENT:
       return {
         ...state,
@@ -84,6 +92,7 @@ export default function mainReducer(state = initialState, action) {
             day: action.payload.day,
             eve: action.payload.eve,
             night: action.payload.night,
+            icon: action.payload.icon
           },
         },
       };
@@ -121,6 +130,7 @@ export default function mainReducer(state = initialState, action) {
 export const setCoords = (lat, lon) => ({ type: SET_COORDS, lat, lon });
 export const setCity = (city) => ({ type: SET_CITY, payload: city });
 export const setNewCity = (city) => ({ type: SET_NEWCITY, payload: city });
+export const setWichTime = (payload) => ({type: SET_WICHTIME, payload})
 export const setCurrent = (payload) => ({
   type: SET_CURRENT,
   payload,
